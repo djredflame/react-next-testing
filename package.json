@@ -1,7 +1,7 @@
 {
   "name": "learning",
   "version": "1.0.0",
-  "description": "",
+  "description": "just to learn react and try out things, nothing special",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "keywords": [],
-  "author": "",
+  "author": "djredflame",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
