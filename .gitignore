@@ -13,5 +13,6 @@ logs
 node_modules/
 .env.local
 public/
+.eslintrc.json
 
 .DS_Store
