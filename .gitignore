@@ -2,17 +2,17 @@
 # Next build dir
 .next/
 
-### react ###
+### React ###
 .DS_*
 *.log
 logs
 **/*.backup.*
 **/*.back.*
+.DS_Store
+# React folders
+public/
 
-### node ###
+### Node ###
 node_modules/
 .env.local
-public/
 .eslintrc.json
-
-.DS_Store
