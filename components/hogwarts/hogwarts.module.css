@@ -1,0 +1,9 @@
+.hogwarts {
+    display: flex;
+    flex-direction: column;
+}
+
+.hogwarts > div > img {
+    width: 370px;
+}
+

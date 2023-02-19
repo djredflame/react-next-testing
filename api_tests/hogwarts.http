@@ -1,0 +1,4 @@
+
+### GET Harry Potter Data from API ###
+
+GET https://hp-api.onrender.com/api/characters/house/gryffindor HTTP/1.1

@@ -1,16 +1,11 @@
 import Navigation from "../components/navigation/Navigation";
-import Weather from "../components/weather/Weather";
-import Counter from "../components/counter/Counter";
-import Chuck from "../components/chuck/Chuck";
+import style from "./app.module.css"
 
 const App = ({Component, pageProps}) => {
     return(
-        <>
+        <main className={style.app}>
         <header>
             <Navigation/>
-            <Weather />
-            <Chuck />
-            <Counter />
         </header>
         <bod>
             <Component pageProps={pageProps}/>
@@ -18,7 +13,7 @@ const App = ({Component, pageProps}) => {
         <footer>
             
         </footer>
-        </>
+        </main>
     )
 }
 

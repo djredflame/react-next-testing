@@ -1,0 +1,9 @@
+.app {
+
+}
+
+.app header {
+    position: sticky;
+    top: 0;
+    width: auto;
+}
