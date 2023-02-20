@@ -1,6 +1,7 @@
-import { useState, useEffect, useReducer } from "react"
+import { useState, useEffect } from "react"
 import uuid from "uuid"
 import style from "./hogwarts.module.css"
+import PaginationButton from "../pagination_button/PaginationButton"
 
 const houses = [
     {id: uuid, name: `Gryffindor`},
@@ -9,34 +10,21 @@ const houses = [
     {id: uuid, name: `Slytherin`}
 ]
 
-const reducer = (state, action) => {
-
-    switch(action.type){
-        case "next":
-            return {
-                number: state.number + 1
-            }
-        case "prev":
-            return {
-                number: state.number - 1
-            }
-        case "first":
-            return {
-                number: 0
-            }
-        case "last":
-            return {
-                number: action.dataLength
-            }
-    }
-}
-
 const Hogwarts = () => {
     const [ data, setData ] = useState([])
     const [ house, setHouse ] = useState(`Gryffindor`)
-    const [ state, dispatch ] = useReducer(reducer, { number: 0, dataLength: 0})
+    const [state, setState] = useState({ index: 0, dataLength: 0 });
+
     const defaultHouse = "Gryffindor"
 
+    const handleStateChange = (newState) => {
+            setState(newState)
+    }
+
+    useEffect(() => {
+        setState({index: state.index, dataLength: state.dataLength})
+    }, [state.index])
+    
     useEffect(() => {
         setHouse(defaultHouse)
     }, [defaultHouse])
@@ -49,6 +37,7 @@ const Hogwarts = () => {
                 const response = await fetch(URL)
                 const data = await response.json()
                 setData(data)
+                setState({ index: 0, dataLength: data.length });
             } catch(e) {
                 console.log(e)
             }
@@ -56,6 +45,8 @@ const Hogwarts = () => {
 
         fetchData(URL)
     }, [URL, house])
+
+    console.log({index: state.index, dataLength: state.dataLength})
 
     if(!data){
         return (
@@ -78,32 +69,27 @@ const Hogwarts = () => {
                 </form>
                 {
                     <>
-                        {!data[state.number] ? <p>loading</p> :
-                            <div key={data[state.number].id} className>
+                        {!data[state.index] ? <p>loading</p> :
+                            <div key={data[state.index].id}>
                                 <div>
-                                    <button disabled={state.number === 0} type={"button"} onClick={() => {
-                                        dispatch({type: "first"})
-                                    }}>
-                                        First
-                                    </button>
-                                    <button disabled={state.number === 0} type={"button"} onClick={() => {
-                                        dispatch({type: "prev"})
-                                    }}>
-                                        Prev
-                                    </button>
-                                    <button disabled={state.number === data.length - 1} type={"button"} onClick={() => {
-                                        dispatch({type: "next"})
-                                    }}>
-                                        Next
-                                    </button>
-                                    <button disabled={state.number === data.length - 1} type={"button"} onClick={() => {
-                                        dispatch({type: "last", dataLength: data.length - 1})
-                                    }}>
-                                        Last
-                                    </button>
+                                    <PaginationButton dataLength={data.length} onStateChange={handleStateChange}/>
                                 </div>
-                                <h3>{data[state.number].name}</h3>
-                                <img src={data[state.number].image} alt={data[state.number].name}/>
+                                <h3>{data[state.index].name}</h3>
+                                <img src={data[state.index].image} alt={data[state.index].name}/>
+                                <p>Actor: {data[state.index].actor}</p>
+                                <p>Species: {data[state.index].species}</p>
+                                <p>Gender: {data[state.index].gender === "male" ? "♂" : "Gender: ♀"}</p>
+                                <p>Hair Colour: {data[state.index].hairColour}</p>
+                                <p>Eye Colour: {data[state.index].eyeColour}</p>
+                                <p>Ancestry: {data[state.index].ancestry}</p>
+                                <p>Wand:</p>
+                                <ul>
+                                    <li><p>Wood: {data[state.index].wand.wood}</p></li>
+                                    <li><p>Core: {data[state.index].wand.core}</p></li>
+                                    <li><p>Length: {data[state.index].wand.length}</p></li>
+                                </ul>
+
+
                             </div>
                         }
                     </>
@@ -111,8 +97,6 @@ const Hogwarts = () => {
             </div>
         )
     }
-    
-
 }
 
 export default Hogwarts;
